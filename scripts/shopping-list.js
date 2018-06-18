@@ -62,7 +62,7 @@ const shoppingList = (function(){
       store.items.push({ id: cuid(), name: itemName, checked: false });
       render();
     } catch {
-      console.log('Cannot add item: {error.message}');
+      console.log(`Cannot add item: ${error.message}`);
     }
   }
   
