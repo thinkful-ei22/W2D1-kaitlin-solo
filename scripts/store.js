@@ -14,10 +14,14 @@ const store = (function() {
     { id: cuid(), name: 'bread', checked: false }
   ];
   
+  const getIdFromElement = function(element) {
+    const itemId = $(element).closest('.js-item-element').attr('data-item-id');
+    return itemId;
+};
+
   const findById = function (id) {
-    let foundItem = store.items.find(item => {
-      item.id === id;
-    });
+    console.log(`Find by ${id}.`);
+    let foundItem = this.items.find(item => item.id === id);
     return foundItem;
   };
 
@@ -33,8 +37,11 @@ const store = (function() {
   };
 
   const findAndToggleChecked = function(id) {
-    let checkItem = this.findById(id);
-    checkItem.checked = !checkItem.checked;
+    // find the item's id
+    const foundItem = this.findById(id);
+    console.log(foundItem);
+    console.log(id);
+    foundItem.checked = !foundItem.checked;
   };
 
   const findAndUpdateName =  function(id, newName) {
@@ -48,12 +55,6 @@ const store = (function() {
   };
 
   const findAndDelete = function(id) {
-    // find item at this index
-    // const currIndex = store.items.findIndex(currId => {
-    //   currId === id;
-    // });
-    // this.items.splice(currIndex, 1);
-
     const result = store.items.filter(item => item.id !== id);
     // update store.items
     store.items = result;
@@ -62,7 +63,7 @@ const store = (function() {
   };
 
   return {
-    items, hideCheckedItems, searchTerm, addItem, findById, findAndToggleChecked, findAndUpdateName, findAndDelete
+    items, getIdFromElement, hideCheckedItems, searchTerm, addItem, findById, findAndToggleChecked, findAndUpdateName, findAndDelete
   };
   
 }());
