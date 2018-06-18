@@ -97,19 +97,6 @@ const shoppingList = (function(){
     });
   }
   
-  function editListItemName(id, itemName) {
-    const item = store.items.find(item => item.id === id);
-    item.name = itemName;
-  }
-  
-  function toggleCheckedItemsFilter() {
-    store.hideCheckedItems = !store.hideCheckedItems;
-  }
-  
-  function setSearchTerm(val) {
-    store.searchTerm = val;
-  }
-  
   
   function handleDeleteItemClicked() {
     // like in `handleItemCheckClicked`, we use event delegation
@@ -128,14 +115,14 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      editListItemName(id, itemName);
+      store.findAndUpdateName(id, itemName);
       render();
     });
   }
   
   function handleToggleFilterClick() {
     $('.js-filter-checked').click(() => {
-      toggleCheckedItemsFilter();
+      store.toggleCheckedFilter();
       render();
     });
   }
@@ -143,7 +130,7 @@ const shoppingList = (function(){
   function handleShoppingListSearch() {
     $('.js-shopping-list-search-entry').on('keyup', event => {
       const val = $(event.currentTarget).val();
-      setSearchTerm(val);
+      store.setSearchTerm(val);
       render();
     });
   }
